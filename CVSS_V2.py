@@ -71,9 +71,22 @@ def reset_values():
     exploitability_score_label.config(text="Exploitability Score: -")
     severity_value_label.config(text="Qualitative Severity Score: -")
 
+def handle_resize(event):
+    # Calculate scaling factors
+    new_width = event.width
+    new_height = event.height
+    
+    # Adjust column weights for proportional resizing
+    root.grid_columnconfigure(0, weight=1)
+    root.grid_columnconfigure(1, weight=1)
+    root.grid_columnconfigure(2, weight=1)
+
 # Create the main window
 root = tk.Tk()
 root.title("CVSS Calculator")
+
+# Bind resize event
+root.bind("<Configure>", handle_resize)
 
 # Create labels and radio buttons for each CVSS metric
 av_label = tk.Label(root, text="Attack Vector:")
@@ -82,7 +95,7 @@ av_var = tk.StringVar(value="N")
 av_options = [("Network", "N"), ("Adjacent Network", "A"), ("Local", "L"), ("Physical", "P")]
 for i, (text, value) in enumerate(av_options):
     av_rb = tk.Radiobutton(root, text=text, variable=av_var, value=value)
-    av_rb.grid(row=1, column=i+1)
+    av_rb.grid(row=1, column=i+1, padx=10, pady=5)
 
 ac_label = tk.Label(root, text="Attack Complexity:")
 ac_label.grid(row=2, column=0, sticky="w")
@@ -90,7 +103,7 @@ ac_var = tk.StringVar(value="L")
 ac_options = [("Low", "L"), ("High", "H")]
 for i, (text, value) in enumerate(ac_options):
     ac_rb = tk.Radiobutton(root, text=text, variable=ac_var, value=value)
-    ac_rb.grid(row=2, column=i+1)
+    ac_rb.grid(row=2, column=i+1, padx=10, pady=5)
 
 pr_label = tk.Label(root, text="Privileges Required:")
 pr_label.grid(row=3, column=0, sticky="w")
@@ -98,7 +111,7 @@ pr_var = tk.StringVar(value="N")
 pr_options = [("None", "N"), ("Low", "L"), ("High", "H")]
 for i, (text, value) in enumerate(pr_options):
     pr_rb = tk.Radiobutton(root, text=text, variable=pr_var, value=value)
-    pr_rb.grid(row=3, column=i+1)
+    pr_rb.grid(row=3, column=i+1, padx=10, pady=5)
 
 ui_label = tk.Label(root, text="User Interaction:")
 ui_label.grid(row=4, column=0, sticky="w")
@@ -106,7 +119,7 @@ ui_var = tk.StringVar(value="N")
 ui_options = [("None", "N"), ("Required", "R")]
 for i, (text, value) in enumerate(ui_options):
     ui_rb = tk.Radiobutton(root, text=text, variable=ui_var, value=value)
-    ui_rb.grid(row=4, column=i+1)
+    ui_rb.grid(row=4, column=i+1, padx=10, pady=5)
 
 s_label = tk.Label(root, text="Scope:")
 s_label.grid(row=5, column=0, sticky="w")
@@ -114,7 +127,7 @@ s_var = tk.StringVar(value="U")
 s_options = [("Unchanged", "U"), ("Changed", "C")]
 for i, (text, value) in enumerate(s_options):
     s_rb = tk.Radiobutton(root, text=text, variable=s_var, value=value)
-    s_rb.grid(row=5, column=i+1)
+    s_rb.grid(row=5, column=i+1, padx=10, pady=5)
 
 c_label = tk.Label(root, text="Confidentiality:")
 c_label.grid(row=6, column=0, sticky="w")
@@ -122,7 +135,7 @@ c_var = tk.StringVar(value="H")
 c_options = [("None", "N"), ("Low", "L"), ("High", "H")]
 for i, (text, value) in enumerate(c_options):
     c_rb = tk.Radiobutton(root, text=text, variable=c_var, value=value)
-    c_rb.grid(row=6, column=i+1)
+    c_rb.grid(row=6, column=i+1, padx=10, pady=5)
 
 i_label = tk.Label(root, text="Integrity:")
 i_label.grid(row=7, column=0, sticky="w")
@@ -130,7 +143,7 @@ i_var = tk.StringVar(value="H")
 i_options = [("None", "N"), ("Low", "L"), ("High", "H")]
 for i, (text, value) in enumerate(i_options):
     i_rb = tk.Radiobutton(root, text=text, variable=i_var, value=value)
-    i_rb.grid(row=7, column=i+1)
+    i_rb.grid(row=7, column=i+1, padx=10, pady=5)
 
 a_label = tk.Label(root, text="Availability:")
 a_label.grid(row=8, column=0, sticky="w")
@@ -138,20 +151,20 @@ a_var = tk.StringVar(value="H")
 a_options = [("None", "N"), ("Low", "L"), ("High", "H")]
 for i, (text, value) in enumerate(a_options):
     a_rb = tk.Radiobutton(root, text=text, variable=a_var, value=value)
-    a_rb.grid(row=8, column=i+1)
+    a_rb.grid(row=8, column=i+1, padx=10, pady=5)
 
 # Add labels to display the calculated scores
 impact_sub_score_label = tk.Label(root, text="Impact Sub-Score: -")
-impact_sub_score_label.grid(row=9, columnspan=3)
+impact_sub_score_label.grid(row=9, columnspan=3, padx=10, pady=5)
 
 impact_score_label = tk.Label(root, text="Impact Score: -")
-impact_score_label.grid(row=10, columnspan=3)
+impact_score_label.grid(row=10, columnspan=3, padx=10, pady=5)
 
 exploitability_score_label = tk.Label(root, text="Exploitability Score: -")
-exploitability_score_label.grid(row=11, columnspan=3)
+exploitability_score_label.grid(row=11, columnspan=3, padx=10, pady=5)
 
 severity_value_label = tk.Label(root, text="Qualitative Severity Score: -")
-severity_value_label.grid(row=12, columnspan=3)
+severity_value_label.grid(row=12, columnspan=3, padx=10, pady=5)
 
 # Add a button to calculate the CVSS score
 calculate_button = tk.Button(root, text="Calculate", command=calculate_cvss_score)
@@ -161,8 +174,12 @@ calculate_button.grid(row=14, column=1, pady=10)
 reset_button = tk.Button(root, text="Reset", command=reset_values)
 reset_button.grid(row=14, column=2, pady=10)
 
-# Store all radio buttons in a list
-all_radiobuttons = []
+# Store all elements in a list for scaling
+all_elements = [
+    av_label, ac_label, pr_label, ui_label, s_label, c_label, i_label, a_label,
+    impact_sub_score_label, impact_score_label, exploitability_score_label, severity_value_label,
+    calculate_button, reset_button
+]
 
 # Set initial values for radio buttons to None
 av_var.set(None)
@@ -176,4 +193,3 @@ a_var.set(None)
 
 # Start the GUI event loop
 root.mainloop()
-
